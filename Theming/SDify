@@ -1,0 +1,29 @@
+#!/bin/bash
+#SDify - A bash script to scale @2x (HD) images down to SD images.
+#By Aehmlo Lxaitn
+#Please keep this header intact.
+#Redistribution not permitted - point them to the original instead!
+#This script requires imagemagick.
+
+if [ "$1" == "-d"]; then
+cd $2
+shift
+shift
+elif [ "$!" == "--directory" ]; then
+cd $2
+shift
+shift
+else
+echo "Usage: $0 -d|--directory DIRNAME"
+echo "DIRNAME: Path to theme directory."
+exit 255 #No arguments.
+fi
+FILES=`ls`
+if [ ! -d SD]; then
+mkdir SD
+fi
+for f in $FILES; do
+bnamefile="SD/`basename $f @2x.png`"
+echo "Input(HD) File:$f Output (SD) File:$bnamefile"
+convert $f -resize 50% $bnamefile.png
+done
